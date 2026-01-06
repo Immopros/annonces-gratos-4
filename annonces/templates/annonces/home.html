@@ -1,0 +1,35 @@
+{% extends "annonces/base.html" %}
+{% block title %}Accueil — AnnonceGratos{% endblock %}
+{% block content %}
+  <h1>Dernières annonces</h1>
+  <p class="muted">Site de petites annonces (version simple). Dépose une annonce en 1 minute.</p>
+
+  {% if annonces %}
+    <div class="grid">
+      {% for a in annonces %}
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; gap:10px;">
+            <div>
+              <div style="font-size:18px; font-weight:800;">
+                <a href="{% url 'annonce_detail' a.pk %}" style="text-decoration:none; color:#111;">{{ a.titre }}</a>
+              </div>
+              <div class="muted">{{ a.ville|default:"" }}</div>
+              <div class="muted" style="margin-top:6px;">{{ a.created_at|date:"d/m/Y H:i" }}</div>
+            </div>
+            <div class="price">
+              {% if a.prix %}{{ a.prix }} €{% else %}<span class="muted">—</span>{% endif %}
+            </div>
+          </div>
+          {% if a.description %}
+            <p style="margin:10px 0 0 0;">{{ a.description|truncatechars:140 }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="card">
+      <p>Aucune annonce pour le moment.</p>
+      <a class="btn" href="/annonces/nouvelle/">Créer la première annonce</a>
+    </div>
+  {% endif %}
+{% endblock %}

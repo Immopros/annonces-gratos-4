@@ -1,0 +1,29 @@
+{% extends "annonces/base.html" %}
+{% block title %}Déposer une annonce — AnnonceGratos{% endblock %}
+{% block content %}
+  <a class="btn secondary" href="/">← Retour</a>
+  <h1 style="margin-top:12px;">Déposer une annonce</h1>
+
+  <form method="post" class="card">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <label for="{{ form.titre.id_for_label }}">Titre</label>
+    {{ form.titre }}
+
+    <label for="{{ form.ville.id_for_label }}">Ville</label>
+    {{ form.ville }}
+
+    <label for="{{ form.prix.id_for_label }}">Prix (€)</label>
+    {{ form.prix }}
+
+    <label for="{{ form.description.id_for_label }}">Description</label>
+    {{ form.description }}
+
+    <div class="form-actions">
+      <button class="btn" type="submit">Publier</button>
+      <a class="btn secondary" href="/">Annuler</a>
+    </div>
+  </form>
+{% endblock %}

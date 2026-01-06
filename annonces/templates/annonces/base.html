@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{% block title %}AnnonceGratos{% endblock %}</title>
+  <style>
+    body{font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; margin:0; background:#fafafa; color:#111;}
+    header{background:#111; color:#fff; padding:16px 20px;}
+    header a{color:#fff; text-decoration:none; font-weight:700;}
+    main{max-width:980px; margin:0 auto; padding:20px;}
+    .topbar{display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+    .btn{display:inline-block; background:#111; color:#fff; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:600;}
+    .btn.secondary{background:#fff; color:#111; border:1px solid #ddd;}
+    .card{background:#fff; border:1px solid #eee; border-radius:14px; padding:14px 16px; box-shadow:0 1px 2px rgba(0,0,0,.04);}
+    .grid{display:grid; grid-template-columns:repeat(1,minmax(0,1fr)); gap:12px;}
+    @media (min-width: 720px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    .muted{color:#666;}
+    .price{font-weight:800;}
+    input, textarea{width:100%; padding:10px 12px; border-radius:10px; border:1px solid #ddd; box-sizing:border-box;}
+    label{display:block; font-weight:700; margin:10px 0 6px;}
+    .form-actions{margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;}
+    footer{padding:20px; text-align:center; color:#777;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div><a href="/">AnnonceGratos</a></div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="btn secondary" href="/admin/">Admin</a>
+        <a class="btn" href="/annonces/nouvelle/">Déposer une annonce</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>© {{ now|date:"Y" }} AnnonceGratos</footer>
+</body>
+</html>

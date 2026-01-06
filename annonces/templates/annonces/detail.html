@@ -1,0 +1,21 @@
+{% extends "annonces/base.html" %}
+{% block title %}{{ annonce.titre }} — AnnonceGratos{% endblock %}
+{% block content %}
+  <a class="btn secondary" href="/">← Retour</a>
+
+  <div class="card" style="margin-top:12px;">
+    <h1 style="margin-top:0;">{{ annonce.titre }}</h1>
+    <p class="muted" style="margin-top:-6px;">
+      {% if annonce.ville %}{{ annonce.ville }} · {% endif %}{{ annonce.created_at|date:"d/m/Y H:i" }}
+    </p>
+
+    <p class="price" style="font-size:22px;">
+      {% if annonce.prix %}{{ annonce.prix }} €{% else %}Prix non indiqué{% endif %}
+    </p>
+
+    {% if annonce.description %}
+      <h3>Description</h3>
+      <p style="white-space:pre-wrap;">{{ annonce.description }}</p>
+    {% endif %}
+  </div>
+{% endblock %}
