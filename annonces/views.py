@@ -4,7 +4,7 @@ from .forms import AnnonceForm
 
 def home(request):
     # Home = liste des dernières annonces
-    annonces = Annonce.objects.order_by('-created_at')[:50]
+    annonces = Annonce.objects.order_by('-id')[:50]
     return render(request, "annonces/home.html", {"annonces": annonces})
 
 def annonce_detail(request, pk: int):
