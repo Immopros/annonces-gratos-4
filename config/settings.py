@@ -32,7 +32,10 @@ ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
     "localhost,127.0.0.1"
 ).split(",")
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://annoncesgratos.fr",
+    "https://www.annoncesgratos.fr",
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
