@@ -12,6 +12,11 @@ CATEGORIES = [
     ("services", "Services"),
     ("divers", "Divers"),
 ]
+category = models.CharField(
+    max_length=50,
+    choices=CATEGORIES,
+    default="divers"
+)
 from django.db import models
 
 class Annonce(models.Model):
