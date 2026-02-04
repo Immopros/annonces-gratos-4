@@ -1,3 +1,17 @@
+CATEGORIES = [
+    ("voitures", "Voitures"),
+    ("motos", "Motos"),
+    ("immobilier", "Immobilier"),
+    ("commerces", "commerces"),
+    ("emploi", "Emploi"),
+    ("multimedia", "Multimédia"),
+    ("maison", "Maison"),
+    ("jouets", "jouets"),
+    ("mode", "Mode"),
+    ("loisirs", "Loisirs"),
+    ("services", "Services"),
+    ("divers", "Divers"),
+]
 from django.db import models
 
 class Annonce(models.Model):
