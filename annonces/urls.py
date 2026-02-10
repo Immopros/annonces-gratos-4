@@ -7,3 +7,4 @@ urlpatterns = [
     path('annonces/<int:pk>/', annonce_detail, name='annonce_detail'),
     path('annonces/nouvelle/', annonce_create, name='annonce_create'),
 ]
+from .views import setup_admin
