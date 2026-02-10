@@ -26,7 +26,8 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
-def setup_admin(request):
+def setup_admin(request, token):
+    ...
     """Crée un superuser SANS terminal (usage ponctuel).
 
     Utilisation:
