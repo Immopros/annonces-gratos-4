@@ -55,3 +55,30 @@ def setup_admin(request):
 
     User.objects.create_superuser(username=username, email=email, password=password)
     return HttpResponse("Superuser created. You can now login at /admin/.")
+    import os
+from django.http import HttpResponse, HttpResponseForbidden
+from django.contrib.auth import get_user_model
+
+def setup_admin(request, token):
+    expected = os.environ.get("ADMIN_SETUP_TOKEN")
+    if not expected or token != expected:
+        return HttpResponseForbidden("Forbidden")
+
+    username = os.environ.get("SUPERUSER_USERNAME", "admin")
+    email = os.environ.get("SUPERUSER_EMAIL", "")
+    password = os.environ.get("SUPERUSER_PASSWORD", "")
+
+    if not password:
+        return HttpResponse("Missing SUPERUSER_PASSWORD env var", status=500)
+
+    User = get_user_model()
+
+    # crée ou reset
+    user, created = User.objects.get_or_create(username=username, defaults={"email": email})
+    user.email = email
+    user.is_staff = True
+    user.is_superuser = True
+    user.set_password(password)
+    user.save()
+
+    return HttpResponse(f"OK admin ready: {username} (created={created})")
