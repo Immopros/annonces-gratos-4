@@ -5,5 +5,4 @@ class AnnoncesConfig(AppConfig):
     name = 'annonces'
 
     
-        from .create_admin import create_superuser
-        create_superuser()
+       
