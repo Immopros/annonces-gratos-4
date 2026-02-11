@@ -1,22 +1,37 @@
+import os
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-from django.conf import settings
+
 
 class Command(BaseCommand):
-  def handle(self, *args, **kwargs):
-      User = get_user_model()
+    help = "Create or update an admin user from environment variables"
 
-      username = settings.SUPERUSER_USERNAME
-      email = settings.SUPERUSER_EMAIL
-      password = settings.SUPERUSER_PASSWORD
+    def handle(self, *args, **options):
+        username = os.environ.get("SUPERUSER_USERNAME", "admin")
+        email = os.environ.get("SUPERUSER_EMAIL", "")
+        password = os.environ.get("SUPERUSER_PASSWORD", "")
 
-      User.objects.filter(username=username).delete()
+        if not password:
+            self.stdout.write(self.style.WARNING("SUPERUSER_PASSWORD missing → skip admin creation"))
+            return
 
-      User.objects.create_superuser(
-          username=username,
-          email=email,
-          password=password
-      )
+        User = get_user_model()
 
-      print("Superuser recréé correctement")
+        user, created = User.objects.get_or_create(username=username, defaults={"email": email})
+
+        # Toujours s'assurer qu'il est admin
+        user.is_staff = True
+        user.is_superuser = True
+
+        if email:
+            user.email = email
+
+        # IMPORTANT: on force le password (comme ça tu peux le changer via Render)
+        user.set_password(password)
+        user.save()
+
+        if created:
+            self.stdout.write(self.style.SUCCESS(f"✅ Superuser '{username}' created/updated"))
+        else:
+            self.stdout.write(self.style.SUCCESS(f"✅ Superuser '{username}' updated (password refreshed)"))
 
