@@ -5,8 +5,5 @@ services:
     plan: free
     buildCommand: |
       pip install -r requirements.txt
-      python manage.py makemigrations
-      python manage.py migrate
-      python manage.py create_admin
       python manage.py collectstatic --noinput
-    startCommand: gunicorn config.wsgi:application
+    startCommand: bash -c "python manage.py migrate && python manage.py create_admin && gunicorn config.wsgi:application"
