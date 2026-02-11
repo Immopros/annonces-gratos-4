@@ -1,21 +1,37 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 
 class Command(BaseCommand):
-    help = "Force create superuser (reset if needed)"
+    help = "Create or update the initial superuser"
 
     def handle(self, *args, **options):
         User = get_user_model()
 
-        # Supprime tous les utilisateurs existants
-        User.objects.all().delete()
+        username = getattr(settings, "SUPERUSER_USERNAME", None)
+        email = getattr(settings, "SUPERUSER_EMAIL", None)
+        password = getattr(settings, "SUPERUSER_PASSWORD", None)
 
-        # Crée un nouvel admin
-        User.objects.create_superuser(
-            username="admin",
-            email="tip@immopros.fr",
-            password="Admin2026!"
+        if not username or not email or not password:
+            self.stdout.write(self.style.ERROR(
+                "Missing SUPERUSER_USERNAME / SUPERUSER_EMAIL / SUPERUSER_PASSWORD"
+            ))
+            return
+
+        user, created = User.objects.get_or_create(
+            username=username,
+            defaults={"email": email}
         )
 
-        self.stdout.write(self.style.SUCCESS("Superuser recreated successfully"))
+        # Force update every time
+        user.email = email
+        user.is_staff = True
+        user.is_superuser = True
+        user.set_password(password)
+        user.save()
+
+        if created:
+            self.stdout.write(self.style.SUCCESS("✅ Superuser created"))
+        else:
+            self.stdout.write(self.style.SUCCESS("✅ Superuser updated"))
