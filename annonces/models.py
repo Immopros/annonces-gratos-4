@@ -1,35 +1,35 @@
 from django.db import models
 
+
 CATEGORIES = [
     ("voitures", "Voitures"),
     ("motos", "Motos"),
     ("immobilier", "Immobilier"),
-    ("commerces", "commerces"),
+    ("commerces", "Commerces"),
     ("emploi", "Emploi"),
     ("multimedia", "Multimédia"),
     ("maison", "Maison"),
-    ("jouets", "jouets"),
+    ("jouets", "Jouets"),
     ("mode", "Mode"),
     ("loisirs", "Loisirs"),
     ("services", "Services"),
     ("divers", "Divers"),
-    ...
 ]
+
 
 class Annonce(models.Model):
     titre = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    prix = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     ville = models.CharField(max_length=120, blank=True)
+    prix = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    description = models.TextField(blank=True)
 
     category = models.CharField(
         max_length=50,
         choices=CATEGORIES,
-        default="divers"
+        default="divers",
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.titre
-        
