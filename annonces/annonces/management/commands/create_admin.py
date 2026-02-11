@@ -1,25 +1,22 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
-import os
+from django.conf import settings
 
 class Command(BaseCommand):
-    help = "Create initial admin user if none exists"
+  def handle(self, *args, **kwargs):
+      User = get_user_model()
 
-    def handle(self, *args, **kwargs):
-        User = get_user_model()
+      username = settings.SUPERUSER_USERNAME
+      email = settings.SUPERUSER_EMAIL
+      password = settings.SUPERUSER_PASSWORD
 
-        username = os.environ.get("SUPERUSER_USERNAME", "admin")
-        email = os.environ.get("SUPERUSER_EMAIL", "tip@immopros.fr")
-        password = os.environ.get("SUPERUSER_PASSWORD", "Admin123!")
+      User.objects.filter(username=username).delete()
 
-        if User.objects.filter(is_superuser=True).exists():
-            self.stdout.write("Superuser already exists")
-            return
+      User.objects.create_superuser(
+          username=username,
+          email=email,
+          password=password
+      )
 
-        User.objects.create_superuser(
-            username=username,
-            email=email,
-            password=password
-        )
+      print("Superuser recréé correctement")
 
-        self.stdout.write("✅ Superuser created")
