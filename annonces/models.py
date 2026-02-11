@@ -1,6 +1,5 @@
 from django.db import models
 
-
 CATEGORIES = [
     ("voitures", "Voitures"),
     ("motos", "Motos"),
@@ -16,12 +15,11 @@ CATEGORIES = [
     ("divers", "Divers"),
 ]
 
-
 class Annonce(models.Model):
     titre = models.CharField(max_length=200)
-    ville = models.CharField(max_length=120, blank=True)
-    prix = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     description = models.TextField(blank=True)
+    prix = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    ville = models.CharField(max_length=120, blank=True)
 
     category = models.CharField(
         max_length=50,
