@@ -13,11 +13,6 @@ CATEGORIES = [
     ("loisirs", "Loisirs"),
     ("services", "Services"),
     ("divers", "Divers"),
-]
-from django.db import models
-
-CATEGORIES = [
-    ("voitures", "Voitures"),
     ...
 ]
 
