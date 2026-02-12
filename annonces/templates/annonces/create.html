@@ -1,29 +1,53 @@
 {% extends "annonces/base.html" %}
-{% block title %}Déposer une annonce — AnnonceGratos{% endblock %}
+{% block title %}Déposer une annonce – AnnonceGratos{% endblock %}
+
 {% block content %}
-  <a class="btn secondary" href="/">← Retour</a>
-  <h1 style="margin-top:12px;">Déposer une annonce</h1>
+<a class="btn secondary" href="/">← Retour</a>
 
-  <form method="post" class="card">
-    {% csrf_token %}
+<h1 style="margin-top:12px;">Déposer une annonce</h1>
 
-    {{ form.non_field_errors }}
+<form method="post" class="card">
+  {% csrf_token %}
 
-    <label for="{{ form.titre.id_for_label }}">Titre</label>
-    {{ form.titre }}
+  {{ form.non_field_errors }}
 
-    <label for="{{ form.ville.id_for_label }}">Ville</label>
-    {{ form.ville }}
+  <label>Titre</label>
+  {{ form.titre }}
 
-    <label for="{{ form.prix.id_for_label }}">Prix (€)</label>
-    {{ form.prix }}
+  <label>Description</label>
+  {{ form.description }}
 
-    <label for="{{ form.description.id_for_label }}">Description</label>
-    {{ form.description }}
+  <label>Prix (€)</label>
+  {{ form.prix }}
 
-    <div class="form-actions">
+  <label>Ville</label>
+  {{ form.ville }}
+
+  <label>Code postal</label>
+  {{ form.code_postal }}
+
+  <label>Secteur</label>
+  {{ form.secteur }}
+
+  <label>Catégorie</label>
+  {{ form.category }}
+
+  <hr>
+
+  <h3>Contact vendeur (non affiché publiquement)</h3>
+
+  <label>Nom</label>
+  {{ form.vendeur_nom }}
+
+  <label>Email</label>
+  {{ form.vendeur_email }}
+
+  <label>Téléphone</label>
+  {{ form.vendeur_telephone }}
+
+  <div class="form-actions">
       <button class="btn" type="submit">Publier</button>
       <a class="btn secondary" href="/">Annuler</a>
-    </div>
-  </form>
+  </div>
+</form>
 {% endblock %}
